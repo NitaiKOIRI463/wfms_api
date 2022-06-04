@@ -10,11 +10,11 @@ class Login_model extends CI_Model
   }
 
 
-  public function verifyUserIdExistOrNot($userId)
+  public function verifyUserIdExistOrNot($email_id)
   {
       $result = $this->db->select('count(id) as total')
-      ->from('tbl_registration_master')
-      ->where(['member_id'=>$userId,'status'=>1])
+      ->from('tbl_user_master')
+      ->where(['email_id'=>$email_id,'status'=>1])
       ->get()->result_array();
       if(!empty($result))
       {
@@ -25,11 +25,12 @@ class Login_model extends CI_Model
       }
   }
 
-  public function getUserIdDetails($userId)
+  public function getUserIdDetails($email_id)
   {
-      $result = $this->db->select('member_id,password,role_type,name,gender,block_status')
-      ->from('tbl_registration_master')
-      ->where(['member_id'=>$userId,'status'=>1])
+      $result = $this->db->select('u.email_id,u.password,u.company_code,c.company_name,c.logo,c.website,c.registration_date,c.expiry_date,u.role_type,u.id')
+      ->from('tbl_user_master u')
+      ->join('tbl_company_registration c','c.company_code=u.company_code','left')
+      ->where(['u.email_id'=>$email_id,'u.status'=>1])
       ->get()->result_array();
       if(!empty($result))
       {
