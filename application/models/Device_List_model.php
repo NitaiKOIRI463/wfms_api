@@ -8,6 +8,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
            parent::__construct();
            
         }
+        
         public function getDeviceList($company_code)
         {
          if($company_code!="")

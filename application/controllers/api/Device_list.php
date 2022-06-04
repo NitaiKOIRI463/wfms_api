@@ -8,6 +8,7 @@ require APPPATH . 'libraries/REST_Controller.php';
 			parent:: __construct();
 			$this->load->model('Device_List_model');
 		}
+		
 		public function get_deviceList_post()
 		{
 			try{
