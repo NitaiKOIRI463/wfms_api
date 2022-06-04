@@ -39,6 +39,8 @@ class AssignDevice extends REST_Controller
         }else
         {
 
+            $this->AssignDevice_model->assignDeviceUpdate_m(['status'=>0],['flow_id'=>$this->input->post('device_id',true),'company_code'=>$this->input->post('company_code',true),'status'=>1]);
+
             $mainData = [];
             $mainData['flow_id'] = $this->input->post('device_id',true);
             $mainData['company_code'] = $this->input->post('company_code',true);
@@ -53,6 +55,7 @@ class AssignDevice extends REST_Controller
             $mainData['status'] = 1;
             $this->AssignDevice_model->assignDevice_m($mainData);
 
+            $this->AssignDevice_model->assignDeviceMasterUpdate_m(['current_status'=>1],['device_id'=>$this->input->post('device_id',true)]);
             $this->response(['status'=>true,'data'=>[],'msg'=>'Successfully Done','response_code' => REST_Controller::HTTP_OK]);
         }
    }
