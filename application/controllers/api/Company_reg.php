@@ -16,9 +16,6 @@ require APPPATH . 'libraries/REST_Controller.php';
 			}elseif($this->input->post('website',true)=='')
 			{
 				$this->response(['status'=>false,'data'=>[],'msg'=>'website  required!!','response_code'=>REST_Controller::HTTP_BAD_REQUEST]);
-			}elseif($this->input->post('password',true)=='')
-			{
-				$this->response(['status'=>false,'data'=>[],'msg'=>'password  required!!','response_code'=>REST_Controller::HTTP_BAD_REQUEST]);
 			}elseif($this->input->post('email_id',true)=='')
 			{
 				$this->response(['status'=>false,'data'=>[],'msg'=>'email_id  required!!','response_code'=>REST_Controller::HTTP_BAD_REQUEST]);
@@ -62,8 +59,7 @@ require APPPATH . 'libraries/REST_Controller.php';
 	                	if($this->input->post('logo',true)!='')
 	                	{
 	                		$inside_image_incoded = $this->input->post('logo',true);
-	                        // $inside_image = str_replace('[removed]', '', $inside_image_incoded);
-	                        // $inside_image;die;
+	                       
 	                        $imageData = base64_decode($inside_image_incoded);
 	                        $inside_image = uniqid() . '.jpg';
 	                        $inside_image_file = '../all-uploaded-img/' . $inside_image;
@@ -73,7 +69,6 @@ require APPPATH . 'libraries/REST_Controller.php';
 	                	$data = [];
 	                	$data['company_name'] = $this->input->post('company_name',true);
 	                	$data['company_code'] = $company_code;
-	                	$data['password'] = md5($this->input->post('password',true));
 	                	$data['website'] = $this->input->post('website',true);
 	                	$data['email_id'] = $this->input->post('email_id',true);
 	                	$data['contact_person'] = $this->input->post('contact_person',true);
@@ -92,7 +87,7 @@ require APPPATH . 'libraries/REST_Controller.php';
 	                	
 	                	$userData = [];
 	                	$userData['email_id'] = $data['email_id'];
-	                	$userData['password'] = $data['password'];
+	                	$userData['password'] = md5($this->input->post('password',true));
 	                	$userData['company_code'] = $data['company_code'];
 	                	$userData['c_by'] = $data['c_by'];
 	                	$userData['c_date'] = $data['c_date'];
