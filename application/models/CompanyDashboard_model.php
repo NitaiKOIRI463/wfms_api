@@ -9,9 +9,11 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
            
         }
         
-        public function get_total_flow_id_m()
+        public function get_total_flow_id_m($company_code)
         {
-        $result = $this->db->select('count(id) as total')->from('tbl_device_allotment_details')->where(['status'=>1])->group_by('flow_id')->get()->result_array();
+        if($company_code!="")
+             $this->db->where(['company_code'=>$company_code]);
+        $result = $this->db->select('count(distinct flow_id) as total')->from('tbl_device_allotment_details')->where(['status'=>1])->get()->result_array();
         return $result[0]['total'];
         }
 
