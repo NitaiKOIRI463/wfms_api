@@ -30,9 +30,11 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
             return $this->db->insert('tbl_user_master',$userData);
 
         }
-        public function getCompanyList()
+        public function getCompanyList($company_code)
        {
-            return $this->db->select('company_name,contact_person,contact_no,address,city,state,company_code')->from('tbl_company_registration')->where(['status'=>1])->order_by('id','desc')->get()->result_array();
+            if($company_code!="")
+                    $this->db->where(['company_code'=>$company_code]);
+            return $this->db->select('*')->from('tbl_company_registration')->where(['status'=>1])->order_by('id','desc')->get()->result_array();
        }
 
        public function verifyRegisterContactExist($contact_no,$company_code)

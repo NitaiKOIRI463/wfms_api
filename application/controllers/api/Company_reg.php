@@ -107,7 +107,8 @@ require APPPATH . 'libraries/REST_Controller.php';
 		public function CompanyList_post()
 		{
 			try{
-            $result = $this->Company_reg_model->getCompanyList();
+			$company_code = $this->input->post('company_code')!=""?$this->input->post('company_code'):"";
+            $result = $this->Company_reg_model->getCompanyList($company_code);
             $this->response(['status'=>true,'data'=>$result,'msg'=>'successfully fetched!','response_code' => REST_Controller::HTTP_OK]);
         }catch(Exception $e)
         {
