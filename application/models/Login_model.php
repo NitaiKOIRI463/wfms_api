@@ -27,7 +27,8 @@ class Login_model extends CI_Model
 
   public function getUserIdDetails($email_id)
   {
-      $result = $this->db->select('u.email_id,u.password,u.company_code,c.company_name,c.logo,c.website,c.registration_date,c.expiry_date,u.role_type,u.id')
+      $base_url = base_url().'all-uploaded-img/'; 
+      $result = $this->db->select("u.email_id,u.password,u.company_code,c.company_name,CONCAT('$base_url',c.logo) as logo,c.website,c.registration_date,c.expiry_date,u.role_type,u.id")
       ->from('tbl_user_master u')
       ->join('tbl_company_registration c','c.company_code=u.company_code','left')
       ->where(['u.email_id'=>$email_id,'u.status'=>1])
