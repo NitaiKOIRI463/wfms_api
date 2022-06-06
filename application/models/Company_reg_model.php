@@ -34,6 +34,20 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
        {
             return $this->db->select('company_name,contact_person,contact_no,address,city,state,company_code')->from('tbl_company_registration')->where(['status'=>1])->order_by('id','desc')->get()->result_array();
        }
+
+       public function verifyRegisterContactExist($contact_no,$company_code)
+        {
+            $qry = $this->db->query("select count(id) as total from tbl_company_registration where contact_no= ? and status = 1 and company_code!= ? ",[$contact_no,$company_code]);
+            $result = $qry->result_array();
+            if(!empty($result))
+            {
+                return $result[0]['total'];
+            }else
+            {
+                return 0;
+            }
+        }
+
        public function editCompanyData($data,$where)
        {
         return $this->db->update('tbl_company_registration',$data,$where);
