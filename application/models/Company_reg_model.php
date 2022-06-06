@@ -34,5 +34,9 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
        {
             return $this->db->select('company_name,contact_person,contact_no,address,city,state,company_code')->from('tbl_company_registration')->where(['status'=>1])->order_by('id','desc')->get()->result_array();
        }
+       public function editCompanyData($data,$where)
+       {
+        return $this->db->update('tbl_company_registration',$data,$where);
+       }
     }
 ?>

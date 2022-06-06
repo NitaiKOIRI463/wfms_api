@@ -10,9 +10,10 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
         }
         public function getProfileList($company_code)
         {
+         $base_url = base_url().'all-uploaded-img/';
          if($company_code!="")
                 $this->db->where('company_code',$company_code);
-        return $this->db->select("company_name,company_code,logo,website,email_id,contact_person,contact_no,registration_date,expiry_date,address,city,state")
+        return $this->db->select("company_name,company_code,CONCAT('$base_url',logo) as logo,website,email_id,contact_person,contact_no,registration_date,expiry_date,address,city,state")
             ->from('tbl_company_registration')
             ->where(['status'=>1])->order_by('id','desc')->get()->result_array();
         }
