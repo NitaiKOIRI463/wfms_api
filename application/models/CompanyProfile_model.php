@@ -12,10 +12,11 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
         {
          $base_url = base_url().'all-uploaded-img/';
          if($company_code!="")
-                $this->db->where('company_code',$company_code);
-        return $this->db->select("company_name,company_code,CONCAT('$base_url',logo) as logo,website,email_id,contact_person,contact_no,registration_date,expiry_date,address,city,state")
-            ->from('tbl_company_registration')
-            ->where(['status'=>1])->order_by('id','desc')->get()->result_array();
+                $this->db->where('r.company_code',$company_code);
+        return $this->db->select("r.company_name,r.company_code,CONCAT('$base_url',r.logo) as logo,r.website,r.email_id,r.contact_person,r.contact_no,r.registration_date,r.expiry_date,r.address,r.city,r.state,s.state_name")
+            ->from('tbl_company_registration r')
+            ->join('tbl_state_master s','s.state_code=r.state','left')
+            ->where(['r.status'=>1])->order_by('r.id','desc')->get()->result_array();
         }
 
         public function getDeviceList($company_code)
